@@ -1,10 +1,10 @@
 name: flame_demo_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.3 <4.0.0'
+  sdk: ">=3.3.3 <4.0.0"
 
 dependencies:
   flutter:
@@ -28,7 +28,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -36,7 +35,7 @@ flutter:
   assets:
     - assets/images/levels/
     - assets/images/towers/
-
+    - assets/images/enemies/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
