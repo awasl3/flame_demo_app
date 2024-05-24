@@ -7,12 +7,13 @@ import 'package:flame_demo_app/actors/enemys/enemy.dart';
 import 'package:flame_demo_app/actors/enemys/radler_enemy.dart';
 import 'package:flame_demo_app/managers/wave_manager.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
+import 'package:flame_demo_app/objects/wave_calculator.dart';
 import 'package:flutter/material.dart';
 
 class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
   static List<Enemy> enemies = [];
   static List<SpawnBlock> spwans = [];
-  static int currentWaveIndex = 0;
+
   static double waveDelay = 5;
   double nextWaveCounter = 0;
 
@@ -21,7 +22,8 @@ class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
   }
 
   sendNextWave() async {
-    Wave wave = waves[currentWaveIndex];
+    Wave wave = WaveCalculator.getNextWave();
+
     for (EnemySpawn enemySpawn in wave.enemies) {
       for (int i = 0; i < enemySpawn.amount; i++) {
         SpawnBlock spawnBlock = spwans[enemySpawn.spwaner];
@@ -39,7 +41,6 @@ class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
         }
       }
     }
-    currentWaveIndex++;
   }
 
   @override
