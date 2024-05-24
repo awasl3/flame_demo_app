@@ -6,10 +6,11 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
   Vector2 gridPosition;
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 100;
+  static final componentSize = Vector2(8, 16);
 
   RadlerEnemy({
     required this.gridPosition,
-  }) : super(size: Vector2(16, 32), anchor: Anchor.bottomLeft);
+  }) : super(size: RadlerEnemy.componentSize, anchor: Anchor.bottomLeft);
 
   @override
   void onLoad() {

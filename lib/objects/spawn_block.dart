@@ -26,4 +26,8 @@ class SpawnBlock extends SpriteComponent
   void update(double dt) {
     super.update(dt);
   }
+
+  Vector2 getGridPosition() {
+    return gridPosition;
+  }
 }
