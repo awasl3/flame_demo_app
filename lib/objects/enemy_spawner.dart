@@ -5,6 +5,7 @@ import 'package:flame/extensions.dart';
 import 'package:flame_demo_app/TowerDefensGame.dart';
 import 'package:flame_demo_app/actors/enemys/enemy.dart';
 import 'package:flame_demo_app/actors/enemys/radler_enemy.dart';
+import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/managers/wave_manager.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
 import 'package:flame_demo_app/objects/wave_calculator.dart';
@@ -34,7 +35,8 @@ class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
             double offset = Random().nextDouble() * (max - min) + min;
             Vector2 position = Vector2(spawnBlock.gridPosition.x,
                 spawnBlock.gridPosition.y + (offset / 32));
-            add(RadlerEnemy(gridPosition: position));
+            add(RadlerEnemy(
+                gridPosition: position, spawnBlock: spawn[enemySpawn.spwaner]));
             await Future.delayed(
                 Duration(milliseconds: Random().nextInt(100) + 20));
             break;
@@ -49,6 +51,7 @@ class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
     if (nextWaveCounter >= waveDelay) {
       sendNextWave();
       nextWaveCounter = 0;
+      waveDelay = double.infinity;
     }
     super.update(dt);
   }
