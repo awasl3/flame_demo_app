@@ -30,13 +30,9 @@ class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
         SpawnBlock spawnBlock = spwans[enemySpawn.spwaner];
         switch (enemySpawn.enemyType) {
           case RadlerEnemy:
-            double min = -16 + RadlerEnemy.componentSize.y / 2;
-            double max = 16 - RadlerEnemy.componentSize.y / 2 - 5;
-            double offset = Random().nextDouble() * (max - min) + min;
-            Vector2 position = Vector2(spawnBlock.gridPosition.x,
-                spawnBlock.gridPosition.y + (offset / 32));
             add(RadlerEnemy(
-                gridPosition: position, spawnBlock: spawn[enemySpawn.spwaner]));
+                gridPosition: spawnBlock.gridPosition,
+                spawnBlock: spawn[enemySpawn.spwaner]));
             await Future.delayed(
                 Duration(milliseconds: Random().nextInt(100) + 20));
             break;
@@ -51,7 +47,6 @@ class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
     if (nextWaveCounter >= waveDelay) {
       sendNextWave();
       nextWaveCounter = 0;
-      waveDelay = double.infinity;
     }
     super.update(dt);
   }
