@@ -2,9 +2,10 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:flame_demo_app/actors/tower/cannon.dart';
+import 'package:flame_demo_app/actors/tower/cannon/cannon.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/objects/base_block.dart';
+import 'package:flame_demo_app/objects/enemy_spawner.dart';
 import 'package:flame_demo_app/objects/ground_block.dart';
 import 'package:flame_demo_app/objects/path_block.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
@@ -25,7 +26,9 @@ class TowerDefenseGame extends FlameGame {
       'levels/ground.png',
       'levels/path.png',
       'levels/spawn.png',
-      'towers/cannon.png'
+      'towers/cannon/base.png',
+      'towers/cannon/barrel.png',
+      'enemies/radler.png'
     ]);
     camera.viewfinder.anchor = Anchor.topLeft;
     initializeGame();
@@ -35,9 +38,7 @@ class TowerDefenseGame extends FlameGame {
     for (var i = 0; i < segments.length; i++) {
       loadGameSegments(i);
     }
-
-    // cannon = Cannon(position: Vector2(128, canvasSize.y - 70));
-    // world.add(cannon);
+    add(EnemySpwaner());
   }
 
   void loadGameSegments(int segmentIndex) {
@@ -57,6 +58,9 @@ class TowerDefenseGame extends FlameGame {
         case GroundBlock:
           add(GroundBlock(
             gridPosition: block.gridPosition,
+          ));
+          add(Cannon(gridPosition: block.gridPosition 
+
           ));
           break;
         case BaseBlock:
