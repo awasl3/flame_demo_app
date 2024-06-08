@@ -13,7 +13,7 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
   int currentBlock = 1;
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 100;
-  static final componentSize = Vector2(8, 16);
+  static final componentSize = Vector2(8, 8);
   late final List<prefix.Block> path;
 
   RadlerEnemy({required this.gridPosition, required this.spawnBlock})
@@ -67,7 +67,6 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
   void checkIfBlockReached() {
     Vector2 next = Vector2((path[currentBlock].gridPosition.x * 32),
         game.size.y - (path[currentBlock].gridPosition.y * 32));
-    print("${(position - next).length}   $currentBlock");
     if ((position - next).length <= 12) {
       currentBlock++;
     }
@@ -92,7 +91,7 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
             (blocks.last.gridPosition.y + yDirection / 2)),
         BaseBlock));
 
-    Vector2 offset = Vector2.random() - Vector2.all(0.5) / 3;
+    Vector2 offset = Vector2.random() - Vector2.all(0.2) / 3;
     path = [];
     for (var element in blocks) {
       path.add(prefix.Block(element.gridPosition + offset, element.blockType));
