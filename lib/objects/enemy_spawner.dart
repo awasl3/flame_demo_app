@@ -30,9 +30,11 @@ class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
         SpawnBlock spawnBlock = spwans[enemySpawn.spwaner];
         switch (enemySpawn.enemyType) {
           case RadlerEnemy:
-            add(RadlerEnemy(
+            Enemy enemy = RadlerEnemy(
                 gridPosition: spawnBlock.gridPosition,
-                spawnBlock: spawn[enemySpawn.spwaner]));
+                spawnBlock: spawn[enemySpawn.spwaner]);
+              enemies.add(enemy);
+              add(enemy);
             await Future.delayed(
                 Duration(milliseconds: Random().nextInt(100) + 20));
             break;

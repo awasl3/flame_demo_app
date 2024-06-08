@@ -4,6 +4,7 @@ import 'package:flame_demo_app/actors/enemys/enemy.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart' as prefix;
 import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/objects/base_block.dart';
+import 'package:flame_demo_app/objects/enemy_spawner.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
 import 'package:flame_demo_app/util/pathfinding/path_finding.dart';
 
@@ -49,6 +50,7 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
       checkIfBlockReached();
     } else {
       removeFromParent();
+      EnemySpwaner.enemies.remove(this);
     }
     super.update(dt);
   }
