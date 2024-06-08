@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:flame_demo_app/actors/tower/cannon.dart';
+import 'package:flame_demo_app/actors/tower/cannon/cannon.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/objects/base_block.dart';
 import 'package:flame_demo_app/objects/enemy_spawner.dart';
@@ -26,7 +26,8 @@ class TowerDefenseGame extends FlameGame {
       'levels/ground.png',
       'levels/path.png',
       'levels/spawn.png',
-      'towers/cannon.png',
+      'towers/cannon/base.png',
+      'towers/cannon/barrel.png',
       'enemies/radler.png'
     ]);
     camera.viewfinder.anchor = Anchor.topLeft;
@@ -57,6 +58,9 @@ class TowerDefenseGame extends FlameGame {
         case GroundBlock:
           add(GroundBlock(
             gridPosition: block.gridPosition,
+          ));
+          add(Cannon(gridPosition: block.gridPosition 
+
           ));
           break;
         case BaseBlock:
