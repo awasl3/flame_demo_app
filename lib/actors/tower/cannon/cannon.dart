@@ -27,6 +27,7 @@ class Cannon extends Component with HasGameReference<TowerDefenseGame> {
 
   @override
   void onLoad() {
+    print("Loaded $gridPosition");
      position = Vector2(
       (gridPosition.x * 32),
       game.size.y - (gridPosition.y * 32),
@@ -51,6 +52,9 @@ class Cannon extends Component with HasGameReference<TowerDefenseGame> {
         if(HeartDisplay.lives > 0) {
             add(Missile(position: Vector2(position.x + 16, position.y - 16), target: target!,speed:projectileSpeed));
         }  
+        else {
+          removeFromParent();
+        }
       }
 
     }
