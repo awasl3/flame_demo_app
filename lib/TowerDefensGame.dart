@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame_demo_app/actors/tower/cannon/cannon.dart';
+import 'package:flame_demo_app/hud/hud.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/objects/base_block.dart';
 import 'package:flame_demo_app/objects/enemy_spawner.dart';
@@ -32,6 +33,8 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
       'projectiles/missile.png'
     ]);
     camera.viewfinder.anchor = Anchor.topLeft;
+
+    addHud();
     initializeGame();
   }
 
@@ -71,5 +74,10 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
           break;
       }
     }
+  }
+  
+  void addHud() {
+
+    camera.viewport.add(Hud());
   }
 }
