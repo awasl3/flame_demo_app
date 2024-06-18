@@ -12,6 +12,7 @@ import 'package:flame_demo_app/objects/enemy_spawner.dart';
 import 'package:flame_demo_app/objects/ground_block.dart';
 import 'package:flame_demo_app/objects/path_block.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
+import 'package:flame_demo_app/objects/tower_builder.dart';
 import 'package:flame_demo_app/objects/wave_calculator.dart';
 
 class TowerDefenseGame extends FlameGame with HasCollisionDetection {
@@ -50,6 +51,7 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
       ScoreDisplay.score = 0;
       HeartDisplay.lives = 50;
       add(EnemySpwaner());
+      add(TowerBuilder());
       started = true;
 
   }
@@ -78,9 +80,7 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
           add(GroundBlock(
             gridPosition: block.gridPosition,
           ));
-          add(Cannon(gridPosition: block.gridPosition 
-
-          ));
+          //add(Cannon(gridPosition: block.gridPosition));
           break;
         case BaseBlock:
           add(BaseBlock(

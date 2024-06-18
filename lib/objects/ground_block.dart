@@ -1,9 +1,15 @@
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame_demo_app/TowerDefensGame.dart';
+import 'package:flame_demo_app/actors/tower/cannon/cannon.dart';
+import 'package:flame_demo_app/objects/tower_builder.dart';
 
 class GroundBlock extends SpriteComponent
-    with HasGameReference<TowerDefenseGame> {
+    with TapCallbacks, HasGameReference<TowerDefenseGame> {
   final Vector2 gridPosition;
+
+  Cannon? tower;
+  bool tapped = false;
 
   GroundBlock({
     required this.gridPosition,
@@ -19,8 +25,28 @@ class GroundBlock extends SpriteComponent
     );
   }
 
+
+  @override
+  void onTapDown(TapDownEvent event) async {
+    if(!tapped){
+      TowerBuilder.toBeBuilded.add(gridPosition);
+    }
+    tapped = true;
+    print("Tapped");
+  
+  }
+
+
+
+
+ 
+
   @override
   void update(double dt) {
+    if(tower != null && tapped == true) {
+      tower = Cannon(gridPosition: gridPosition);
+      add(tower!);
+    }
     super.update(dt);
   }
 }
