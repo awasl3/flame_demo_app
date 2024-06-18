@@ -1,6 +1,9 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_demo_app/TowerDefensGame.dart';
 import 'package:flame_demo_app/actors/enemys/enemy.dart';
+import 'package:flame_demo_app/actors/projectiles/missile.dart';
+import 'package:flame_demo_app/actors/projectiles/projectile.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart' as prefix;
 import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/objects/base_block.dart';
@@ -8,17 +11,32 @@ import 'package:flame_demo_app/objects/enemy_spawner.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
 import 'package:flame_demo_app/util/pathfinding/path_finding.dart';
 
-class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
+class RadlerEnemy extends Enemy with CollisionCallbacks, HasGameReference<TowerDefenseGame> {
   Vector2 gridPosition;
   prefix.Block spawnBlock;
   int currentBlock = 1;
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 100;
+  final List<Projectile> projectiles = [];
   static final componentSize = Vector2(8, 8);
   late final List<prefix.Block> path;
 
   RadlerEnemy({required this.gridPosition, required this.spawnBlock})
       : super(size: RadlerEnemy.componentSize, anchor: Anchor.bottomLeft);
+
+
+    @override
+void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+  print("Collision");
+  if (other is Missile) {
+    if((other as Missile).target == this) {
+          destoryEnemy();
+    }
+
+  }
+
+  super.onCollision(intersectionPoints, other);
+}
 
   @override
   void onLoad() {
@@ -29,6 +47,8 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
       game.size.y - (gridPosition.y * 32),
     );
     setPathToFollow();
+
+    add(RectangleHitbox());
   }
 
   @override
@@ -49,8 +69,7 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
       moveToPosition(smoothTargetPos, dt);
       checkIfBlockReached();
     } else {
-      removeFromParent();
-      EnemySpwaner.enemies.remove(this);
+      destoryEnemy();
     }
     super.update(dt);
   }
@@ -97,6 +116,20 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
     path = [];
     for (var element in blocks) {
       path.add(prefix.Block(element.gridPosition + offset, element.blockType));
+    }
+  }
+
+  @override
+  addProjectile(Projectile projectile) {
+    projectiles.add(projectile);
+  }
+
+  @override
+  destoryEnemy() {
+    removeFromParent();
+    EnemySpwaner.enemies.remove(this);
+    for (Projectile element in projectiles) {
+      element.destroyProjectile();
     }
   }
 }

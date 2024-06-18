@@ -10,7 +10,7 @@ import 'package:flame_demo_app/objects/ground_block.dart';
 import 'package:flame_demo_app/objects/path_block.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
 
-class TowerDefenseGame extends FlameGame {
+class TowerDefenseGame extends FlameGame with HasCollisionDetection {
   TowerDefenseGame();
   late Cannon cannon;
 
@@ -28,7 +28,8 @@ class TowerDefenseGame extends FlameGame {
       'levels/spawn.png',
       'towers/cannon/base.png',
       'towers/cannon/barrel.png',
-      'enemies/radler.png'
+      'enemies/radler.png',
+      'projectiles/missile.png'
     ]);
     camera.viewfinder.anchor = Anchor.topLeft;
     initializeGame();

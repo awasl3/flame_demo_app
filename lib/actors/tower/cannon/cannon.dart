@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flame/components.dart';
 import 'package:flame_demo_app/TowerDefensGame.dart';
 import 'package:flame_demo_app/actors/enemys/enemy.dart';
+import 'package:flame_demo_app/actors/projectiles/missile.dart';
 import 'package:flame_demo_app/actors/tower/cannon/barrel.dart';
 import 'package:flame_demo_app/actors/tower/cannon/base.dart';
 import 'package:flame_demo_app/objects/enemy_spawner.dart';
@@ -10,10 +13,12 @@ class Cannon extends Component with HasGameReference<TowerDefenseGame> {
   late Barrel barrel;
   Enemy? target;
   late Vector2 position;
-  int range = 100000;
+  int range = 100;
   int damage = 10;
-  int attackspeed = 1;
+  double attackspeed = 1;
+  double currentTargetTime = 0;
   int rotationSpeed = 180;
+  double projectileSpeed = 500;
   final Vector2 gridPosition;
   Cannon({
     required this.gridPosition,
@@ -33,10 +38,21 @@ class Cannon extends Component with HasGameReference<TowerDefenseGame> {
 
   @override
   void update(double dt) {
-    target = getNearestEnemy();
-    barrel.enemy = target;
-    super.update(dt);
+    Enemy? newTarget = getNearestEnemy();
+    if(newTarget != target) {
+      barrel.enemy = newTarget;
+      target = newTarget;
+    }
+    else if (target != null ){
+      currentTargetTime += dt;
+      if(currentTargetTime >= attackspeed) {
+        currentTargetTime = 0;
+        add(Missile(position: Vector2(position.x + 16, position.y - 16), target: target!,speed:projectileSpeed));
+      }
+
+    }
     
+    super.update(dt);
   }
 
 

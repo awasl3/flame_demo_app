@@ -37,6 +37,7 @@ flutter:
     - assets/images/towers/
     - assets/images/towers/cannon/
     - assets/images/enemies/
+    - assets/images/projectiles/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
