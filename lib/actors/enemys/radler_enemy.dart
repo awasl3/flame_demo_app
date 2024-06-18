@@ -4,6 +4,7 @@ import 'package:flame_demo_app/TowerDefensGame.dart';
 import 'package:flame_demo_app/actors/enemys/enemy.dart';
 import 'package:flame_demo_app/actors/projectiles/missile.dart';
 import 'package:flame_demo_app/actors/projectiles/projectile.dart';
+import 'package:flame_demo_app/hud/lives.dart';
 import 'package:flame_demo_app/hud/score.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart' as prefix;
 import 'package:flame_demo_app/managers/segment_manager.dart';
@@ -28,7 +29,9 @@ class RadlerEnemy extends Enemy with CollisionCallbacks, HasGameReference<TowerD
 
     @override
 void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-  if (other is Missile) {
+  if(other is BaseBlock){
+      destoryEnemy(false);
+  } else if (other is Missile) {
     if((other as Missile).target == this) {
           destoryEnemy(true);
     }
@@ -129,6 +132,9 @@ void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     removeFromParent();
     if(killed) {
       ScoreDisplay.score += 10;
+    }
+    else {
+      HeartDisplay.subtract(1);
     }
     
     EnemySpwaner.enemies.remove(this);

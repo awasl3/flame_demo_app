@@ -3,7 +3,7 @@ import 'package:flame_demo_app/TowerDefensGame.dart';
 import 'package:flutter/material.dart';
 
 class ScoreDisplay extends SpriteComponent with HasGameReference<TowerDefenseGame> {
-   static int score = 10;
+   static int score = 0;
    late TextComponent scoreTextComponent;
    double currentTime =0;
 
@@ -31,12 +31,15 @@ class ScoreDisplay extends SpriteComponent with HasGameReference<TowerDefenseGam
 
   @override
   void update(double dt) {
-    currentTime+=dt;
+    if(game.started) {
+      currentTime+=dt;
     if(currentTime >= 5) {
       currentTime = 0;
       ScoreDisplay.score += 1;
     } 
     scoreTextComponent.text = '${ScoreDisplay.score}';
+    }
+    
     //scoreTextComponent.position = Vector2(position.x -100 +ScoreDisplay.score.toString().length*32 ,position.y- 32);
   }
 }

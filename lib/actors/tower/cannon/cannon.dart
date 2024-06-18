@@ -6,6 +6,7 @@ import 'package:flame_demo_app/actors/enemys/enemy.dart';
 import 'package:flame_demo_app/actors/projectiles/missile.dart';
 import 'package:flame_demo_app/actors/tower/cannon/barrel.dart';
 import 'package:flame_demo_app/actors/tower/cannon/base.dart';
+import 'package:flame_demo_app/hud/lives.dart';
 import 'package:flame_demo_app/objects/enemy_spawner.dart';
 
 class Cannon extends Component with HasGameReference<TowerDefenseGame> {
@@ -47,7 +48,9 @@ class Cannon extends Component with HasGameReference<TowerDefenseGame> {
       currentTargetTime += dt;
       if(currentTargetTime >= attackspeed) {
         currentTargetTime = 0;
-        add(Missile(position: Vector2(position.x + 16, position.y - 16), target: target!,speed:projectileSpeed));
+        if(HeartDisplay.lives > 0) {
+            add(Missile(position: Vector2(position.x + 16, position.y - 16), target: target!,speed:projectileSpeed));
+        }  
       }
 
     }

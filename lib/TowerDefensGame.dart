@@ -4,16 +4,20 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame_demo_app/actors/tower/cannon/cannon.dart';
 import 'package:flame_demo_app/hud/hud.dart';
+import 'package:flame_demo_app/hud/lives.dart';
+import 'package:flame_demo_app/hud/score.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/objects/base_block.dart';
 import 'package:flame_demo_app/objects/enemy_spawner.dart';
 import 'package:flame_demo_app/objects/ground_block.dart';
 import 'package:flame_demo_app/objects/path_block.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
+import 'package:flame_demo_app/objects/wave_calculator.dart';
 
 class TowerDefenseGame extends FlameGame with HasCollisionDetection {
   TowerDefenseGame();
   late Cannon cannon;
+  bool started = false;
 
   @override
   Color backgroundColor() {
@@ -30,19 +34,30 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
       'towers/cannon/base.png',
       'towers/cannon/barrel.png',
       'enemies/radler.png',
-      'projectiles/missile.png'
+      'projectiles/missile.png',
+      'hud/heart.png'
     ]);
     camera.viewfinder.anchor = Anchor.topLeft;
-
+    initializeGameBoard();
+    ScoreDisplay.score = 0;
+    HeartDisplay.lives = 50;
     addHud();
-    initializeGame();
+    
   }
 
-  void initializeGame() {
+
+  void startGame(){
+      ScoreDisplay.score = 0;
+      HeartDisplay.lives = 50;
+      add(EnemySpwaner());
+      started = true;
+
+  }
+
+  void initializeGameBoard() {
     for (var i = 0; i < segments.length; i++) {
       loadGameSegments(i);
     }
-    add(EnemySpwaner());
   }
 
   void loadGameSegments(int segmentIndex) {
@@ -76,8 +91,25 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
     }
   }
   
-  void addHud() {
 
+
+
+  void addHud() {
     camera.viewport.add(Hud());
   }
+
+  void reset() {
+    WaveCalculator.currentWaveIndex = 0;
+    startGame();
+  }
+
+
+  @override
+  void update(double dt) {
+  if (HeartDisplay.lives <= 0) {
+    overlays.add('GameOver');
+    started = false;
+  }
+  super.update(dt);
+}
 }

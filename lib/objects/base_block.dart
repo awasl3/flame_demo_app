@@ -1,8 +1,9 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_demo_app/TowerDefensGame.dart';
 
 class BaseBlock extends SpriteComponent
-    with HasGameReference<TowerDefenseGame> {
+    with  HasGameReference<TowerDefenseGame> {
   final Vector2 gridPosition;
 
   BaseBlock({
@@ -17,6 +18,7 @@ class BaseBlock extends SpriteComponent
       (gridPosition.x * size.x),
       game.size.y - (gridPosition.y * size.y),
     );
+    add(RectangleHitbox(size: Vector2.all(30),collisionType: CollisionType.passive));
   }
 
   @override
