@@ -5,6 +5,7 @@ import 'package:flame/extensions.dart';
 import 'package:flame_demo_app/TowerDefensGame.dart';
 import 'package:flame_demo_app/actors/enemys/enemy.dart';
 import 'package:flame_demo_app/actors/enemys/radler_enemy.dart';
+import 'package:flame_demo_app/hud/lives.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/managers/wave_manager.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
@@ -23,6 +24,7 @@ class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
   }
 
   sendNextWave() async {
+    if(HeartDisplay.lives > 0) {
     Wave wave = WaveCalculator.getNextWave();
 
     for (EnemySpawn enemySpawn in wave.enemies) {
@@ -40,6 +42,11 @@ class EnemySpwaner extends Component with HasGameReference<TowerDefenseGame> {
             break;
         }
       }
+    }
+    }
+    else{
+    
+      removeFromParent();
     }
   }
 

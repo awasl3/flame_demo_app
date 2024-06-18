@@ -10,5 +10,5 @@ abstract class Enemy extends SpriteComponent {
 
 
   addProjectile(Projectile projectile);
-  destoryEnemy();
+  destoryEnemy(bool killed);
 }
