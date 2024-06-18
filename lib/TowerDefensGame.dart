@@ -103,6 +103,7 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
     TowerBuilder.towers.forEach((element) {
       element.removeFromParent();
     });
+    EnemySpwaner.enemies = [];
     TowerBuilder.towers = [];
     WaveCalculator.currentWaveIndex = 0;
     startGame();

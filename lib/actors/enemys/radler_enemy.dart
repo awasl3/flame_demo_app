@@ -100,7 +100,7 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
             (blocks.last.gridPosition.y + yDirection / 2)),
         BaseBlock));
 
-    Vector2 offset = Vector2.random() - Vector2.all(0.2) / 3;
+    Vector2 offset = (Vector2.random()) / 5;
     path = [];
     for (var element in blocks) {
       path.add(prefix.Block(element.gridPosition + offset, element.blockType));
