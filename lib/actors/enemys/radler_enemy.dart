@@ -134,7 +134,7 @@ void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
       ScoreDisplay.score += 10;
     }
     else {
-      HeartDisplay.subtract(1);
+      HeartDisplay.subtract(50);
     }
     
     EnemySpwaner.enemies.remove(this);

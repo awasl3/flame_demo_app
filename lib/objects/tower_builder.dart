@@ -21,9 +21,12 @@ class TowerBuilder extends Component with HasGameReference<TowerDefenseGame> {
   buildTower() async {
     if(HeartDisplay.lives > 0) {
       toBeBuilded.forEach((element) {
-        Cannon cannon = Cannon(gridPosition: element);
-        towers.add(cannon);
-        add(cannon);
+        if(!towers.any((t) =>t.gridPosition == element )) {
+          Cannon cannon = Cannon(gridPosition: element);
+          towers.add(cannon);
+          add(cannon);
+        }
+        
       });
       toBeBuilded = [];
     }
