@@ -5,6 +5,7 @@ import 'package:flame/game.dart';
 import 'package:flame_demo_app/actors/tower/cannon/cannon.dart';
 import 'package:flame_demo_app/hud/hud.dart';
 import 'package:flame_demo_app/hud/lives.dart';
+import 'package:flame_demo_app/hud/money.dart';
 import 'package:flame_demo_app/hud/score.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/objects/base_block.dart';
@@ -50,6 +51,7 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
   void startGame(){
       ScoreDisplay.score = 0;
       HeartDisplay.lives = 50;
+      MoneyDisplay.money =110;
       add(EnemySpwaner());
       add(TowerBuilder());
       started = true;
@@ -106,6 +108,7 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
     EnemySpwaner.enemies = [];
     TowerBuilder.towers = [];
     WaveCalculator.currentWaveIndex = 0;
+
     startGame();
   }
 

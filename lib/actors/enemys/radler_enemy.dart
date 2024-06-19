@@ -5,6 +5,7 @@ import 'package:flame_demo_app/actors/enemys/enemy.dart';
 import 'package:flame_demo_app/actors/projectiles/missile.dart';
 import 'package:flame_demo_app/actors/projectiles/projectile.dart';
 import 'package:flame_demo_app/hud/lives.dart';
+import 'package:flame_demo_app/hud/money.dart';
 import 'package:flame_demo_app/hud/score.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart' as prefix;
 import 'package:flame_demo_app/managers/segment_manager.dart';
@@ -117,6 +118,7 @@ class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
     removeFromParent();
     if(killed) {
       ScoreDisplay.score += 10;
+      MoneyDisplay.money += 10;
     }
     else {
       HeartDisplay.subtract(1);
