@@ -5,6 +5,7 @@ import 'package:flame_demo_app/actors/enemys/enemy.dart';
 import 'package:flame_demo_app/actors/projectiles/missile.dart';
 import 'package:flame_demo_app/actors/projectiles/projectile.dart';
 import 'package:flame_demo_app/hud/lives.dart';
+import 'package:flame_demo_app/hud/money.dart';
 import 'package:flame_demo_app/hud/score.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart' as prefix;
 import 'package:flame_demo_app/managers/segment_manager.dart';
@@ -13,33 +14,18 @@ import 'package:flame_demo_app/objects/enemy_spawner.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
 import 'package:flame_demo_app/util/pathfinding/path_finding.dart';
 
-class RadlerEnemy extends Enemy with CollisionCallbacks, HasGameReference<TowerDefenseGame> {
+class RadlerEnemy extends Enemy with HasGameReference<TowerDefenseGame> {
   Vector2 gridPosition;
   prefix.Block spawnBlock;
   int currentBlock = 1;
   final Vector2 velocity = Vector2.zero();
-  final double moveSpeed = 100;
-  final List<Projectile> projectiles = [];
   static final componentSize = Vector2(8, 8);
   late final List<prefix.Block> path;
 
   RadlerEnemy({required this.gridPosition, required this.spawnBlock})
-      : super(size: RadlerEnemy.componentSize, anchor: Anchor.bottomLeft);
+      : super(size: RadlerEnemy.componentSize, anchor: Anchor.bottomLeft,moveSpeed: 100);
 
 
-    @override
-void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-  if(other is BaseBlock){
-      destoryEnemy(false);
-  } else if (other is Missile) {
-    if((other as Missile).target == this) {
-          destoryEnemy(true);
-    }
-
-  }
-
-  super.onCollision(intersectionPoints, other);
-}
 
   @override
   void onLoad() {
@@ -115,7 +101,7 @@ void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
             (blocks.last.gridPosition.y + yDirection / 2)),
         BaseBlock));
 
-    Vector2 offset = Vector2.random() - Vector2.all(0.2) / 3;
+    Vector2 offset = (Vector2.random()) / 5;
     path = [];
     for (var element in blocks) {
       path.add(prefix.Block(element.gridPosition + offset, element.blockType));
@@ -132,6 +118,7 @@ void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     removeFromParent();
     if(killed) {
       ScoreDisplay.score += 10;
+      MoneyDisplay.money += 10;
     }
     else {
       HeartDisplay.subtract(1);

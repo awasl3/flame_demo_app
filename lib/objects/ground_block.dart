@@ -28,12 +28,7 @@ class GroundBlock extends SpriteComponent
 
   @override
   void onTapDown(TapDownEvent event) async {
-    if(!tapped){
-      TowerBuilder.toBeBuilded.add(gridPosition);
-    }
-    tapped = true;
-    print("Tapped");
-  
+    TowerBuilder.toBeBuilded.add(gridPosition);
   }
 
 

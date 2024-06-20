@@ -7,6 +7,7 @@ import 'package:flame_demo_app/actors/enemys/enemy.dart';
 import 'package:flame_demo_app/actors/enemys/radler_enemy.dart';
 import 'package:flame_demo_app/actors/tower/cannon/cannon.dart';
 import 'package:flame_demo_app/hud/lives.dart';
+import 'package:flame_demo_app/hud/money.dart';
 import 'package:flame_demo_app/managers/segment_manager.dart';
 import 'package:flame_demo_app/managers/wave_manager.dart';
 import 'package:flame_demo_app/objects/spawn_block.dart';
@@ -21,9 +22,16 @@ class TowerBuilder extends Component with HasGameReference<TowerDefenseGame> {
   buildTower() async {
     if(HeartDisplay.lives > 0) {
       toBeBuilded.forEach((element) {
-        Cannon cannon = Cannon(gridPosition: element);
-        towers.add(cannon);
-        add(cannon);
+        if(!towers.any((t) =>t.gridPosition == element )) {
+          if(MoneyDisplay.money >= 100) {
+            Cannon cannon = Cannon(gridPosition: element);
+            towers.add(cannon);
+            add(cannon);
+            MoneyDisplay.money -= 100;
+          }
+          
+        }
+        
       });
       toBeBuilded = [];
     }
