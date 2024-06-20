@@ -30,6 +30,13 @@ class MoneyDisplay extends SpriteComponent with HasGameReference<TowerDefenseGam
 
   @override
   void update(double dt) {
-    
+    if(game.started) {
+      currentTime += dt;
+      if(currentTime >= 5) {
+        MoneyDisplay.money += 10;
+        currentTime = 0;
+      }
+    }
+    moneyTextComponent.text = "${MoneyDisplay.money}";
   }
 }

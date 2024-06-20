@@ -66,7 +66,6 @@ class TowerDefenseGame extends FlameGame with HasCollisionDetection {
 
   void loadGameSegments(int segmentIndex) {
     for (final block in segments[segmentIndex]) {
-      print(block.blockType);
       switch (block.blockType) {
         case PathBlock:
           add(PathBlock(

@@ -27,7 +27,6 @@ class Cannon extends Component with HasGameReference<TowerDefenseGame> {
 
   @override
   void onLoad() {
-    print("Loaded $gridPosition");
      position = Vector2(
       (gridPosition.x * 32),
       game.size.y - (gridPosition.y * 32),
